@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: ai-code-reviewer-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
+    envVars:
+      - key: MODEL_PROVIDER
+        value: openai
+      - key: MODEL_NAME
+        value: gpt-4o-mini
+      - key: REQUEST_TIMEOUT_SECONDS
+        value: "30"
+      - key: AI_MAX_RETRIES
+        value: "2"
+      - key: MAX_CODE_LINES
+        value: "500"
+      - key: MAX_CODE_CHARS
+        value: "25000"
+      - key: MOCK_MODE
+        value: "true"
+      - key: CORS_ORIGINS
+        value: https://your-frontend.vercel.app
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
